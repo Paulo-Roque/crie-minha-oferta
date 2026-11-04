@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comparativo Mesmo Produto Lado a Lado - MercadoLíder + Preço + Kit</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#f8fafc;color:#0f172a;min-height:100vh}
+.top-bar{background:#0f172a;color:white;text-align:center;padding:10px;font-size:11px;font-weight:600;display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap}
+.top-bar .destaque{background:#f59e0b;color:#0f172a;padding:4px 10px;border-radius:6px;font-weight:800;font-size:10px}
+header{background:white;border-bottom:1px solid #e2e8f0;padding:14px 0;position:sticky;top:0;z-index:100;box-shadow:0 1px 10px rgba(0,0,0,0.04)}
+.header-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:22px;font-weight:900;letter-spacing:-0.5px}
+.logo span{color:#f59e0b}
+.header-right{font-size:11px;color:#64748b;font-weight:600;display:flex;gap:10px;align-items:center}
+.badge-header{background:#10b981;color:white;padding:5px 10px;border-radius:20px;font-size:10px;font-weight:800}
+.container{max-width:1150px;margin:0 auto;padding:20px}
+.hero{background:white;border:1px solid #e2e8f0;border-radius:16px;padding:28px;margin:20px 0;box-shadow:0 4px 20px rgba(0,0,0,0.04)}
+.hero h1{font-size:26px;font-weight:900;line-height:1.2;margin-bottom:8px;letter-spacing:-0.5px}
+.hero h1 span{color:#f59e0b}
+.hero p{color:#64748b;font-size:14px;margin-bottom:20px;line-height:1.5}
+.hero .exemplo{background:#f8fafc;border:1px dashed #cbd5e1;border-radius:10px;padding:12px;font-size:12px;color:#475569;margin-bottom:20px}
+.hero .exemplo b{color:#0f172a}
+.search-box{display:flex;gap:10px;margin-bottom:14px}
+.search-box input{flex:1;padding:18px 22px;border:2px solid #e2e8f0;border-radius:14px;font-size:16px;font-weight:600;outline:none;transition:all 0.2s;background:white}
+.search-box input:focus{border-color:#f59e0b;box-shadow:0 0 0 3px rgba(245,158,11,0.1)}
+.search-box button{background:#0f172a;color:white;border:none;padding:18px 32px;border-radius:14px;font-weight:800;font-size:15px;cursor:pointer;transition:all 0.15s;white-space:nowrap}
+.search-box button:hover{background:#1e293b;transform:translateY(-1px)}
+.quick-tags{display:flex;gap:8px;flex-wrap:wrap}
+.tag{background:#f8fafc;border:1px solid #e2e8f0;color:#475569;padding:9px 16px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.15s}
+.tag:hover{background:#0f172a;color:white;border-color:#0f172a}
+.result{margin-top:24px}
+.card{background:white;border-radius:18px;padding:24px;margin-bottom:24px;box-shadow:0 4px 20px rgba(0,0,0,0.05);border:2px solid #0f172a}
+.badge{display:inline-flex;align-items:center;padding:7px 14px;border-radius:8px;font-size:11px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;color:white;margin-bottom:12px;background:#0f172a}
+.title{font-size:20px;font-weight:800;margin-bottom:6px;line-height:1.3}
+.subtitle{font-size:13px;color:#64748b;font-weight:500;margin-bottom:18px;line-height:1.4;background:#f8fafc;border:1px solid #e2e8f0;padding:10px 14px;border-radius:8px}
+.comparativo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:20px}
+@media(max-width:900px){.comparativo-grid{grid-template-columns:1fr;gap:16px}}
+.produto-card{background:white;border:2px solid #e2e8f0;border-radius:16px;padding:16px;position:relative;transition:all 0.25s;cursor:pointer;display:flex;flex-direction:column}
+.produto-card:hover{transform:translateY(-4px);box-shadow:0 15px 40px rgba(0,0,0,0.12);border-color:#0f172a}
+.produto-card.mais-barato{border-color:#10b981;background:linear-gradient(to bottom, #f0fdf4 0%, white 70px);box-shadow:0 8px 30px rgba(16,185,129,0.15)}
+.produto-card.oficial{border-color:#2563eb;background:linear-gradient(to bottom, #eff6ff 0%, white 70px);box-shadow:0 8px 30px rgba(37,99,235,0.15)}
+.produto-card.kit{border-color:#f59e0b;background:linear-gradient(to bottom, #fffbeb 0%, white 70px);box-shadow:0 8px 30px rgba(245,158,11,0.15)}
+.produto-card.melhor{border-color:#0f172a;background:linear-gradient(to bottom, #f8fafc 0%, white 70px);box-shadow:0 8px 30px rgba(15,23,42,0.15)}
+.vencedor-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);padding:5px 14px;border-radius:20px;font-size:10px;font-weight:900;letter-spacing:0.5px;color:white;z-index:3;white-space:nowrap}
+.vencedor-badge.barato{background:#10b981}
+.vencedor-badge.oficial{background:#2563eb}
+.vencedor-badge.kit{background:#f59e0b;color:#0f172a}
+.vencedor-badge.melhor{background:#0f172a}
+.img-wrap{width:100%;height:150px;background:white;border-radius:12px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid #f1f5f9;position:relative}
+.img-wrap img{width:100%;height:100%;object-fit:contain;transition:transform 0.3s}
+.produto-card:hover .img-wrap img{transform:scale(1.05)}
+.nome{font-size:13px;font-weight:700;line-height:1.35;min-height:36px;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.loja{font-size:11px;color:#64748b;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.loja .nivel{padding:3px 8px;border-radius:6px;font-size:10px;font-weight:800;color:white}
+.loja .nivel.PLATINUM{background:#0f172a}
+.loja .nivel.GOLD{background:#f59e0b;color:#0f172a}
+.loja .nivel.SILVER{background:#94a3b8}
+.loja .nivel.BRONZE{background:#a16207}
+.loja .oficial{color:#2563eb;font-weight:800;display:flex;align-items:center;gap:3px;background:#eff6ff;padding:3px 8px;border-radius:6px}
+.preco-area{margin-bottom:12px}
+.preco-area .de{font-size:12px;color:#94a3b8;text-decoration:line-through}
+.preco-area .por{font-size:22px;font-weight:900;color:#0f172a;display:flex;align-items:center;gap:8px}
+.preco-area .por .off{background:#dc2626;color:white;font-size:11px;padding:3px 8px;border-radius:6px}
+.vantagens-list{list-style:none;margin:10px 0 14px 0;flex:1}
+.vantagens-list li{font-size:11px;padding:6px 0;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;gap:8px;color:#334155}
+.vantagens-list li:last-child{border:none}
+.vantagens-list li .icon{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+.vantagens-list li.positivo .icon{background:#dcfce7;color:#166534}
+.vantagens-list li.negativo .icon{background:#fee2e2;color:#dc2626}
+.vantagens-list li.neutro .icon{background:#f1f5f9;color:#64748b}
+.vantagens-list li.destaque{font-weight:700;background:#f8fafc;padding:6px 8px;border-radius:6px;border:1px solid #e2e8f0}
+.btn-comprar{width:100%;padding:12px;border-radius:10px;font-weight:800;font-size:12px;cursor:pointer;border:none;transition:all 0.15s;margin-top:auto}
+.btn-comprar.barato{background:#10b981;color:white}
+.btn-comprar.oficial{background:#2563eb;color:white}
+.btn-comprar.kit{background:#f59e0b;color:#0f172a}
+.btn-comprar.padrao{background:#0f172a;color:white}
+.btn-comprar:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,0.15)}
+.tabela-comparativa{background:#f8fafc;border:2px solid #e2e8f0;border-radius:14px;overflow:hidden;margin-top:20px}
+.tabela-comparativa .header-tabela{background:#0f172a;color:white;padding:12px 16px;font-size:13px;font-weight:800;display:flex;justify-content:space-between}
+.tabela-linha{display:grid;grid-template-columns:140px repeat(3,1fr);gap:0;font-size:12px;border-bottom:1px solid #e2e8f0}
+@media(max-width:700px){.tabela-linha{grid-template-columns:100px repeat(3,1fr);font-size:11px}}
+.tabela-linha:last-child{border:none}
+.tabela-linha .cel{padding:10px 12px;display:flex;align-items:center;border-right:1px solid #e2e8f0}
+.tabela-linha .cel:last-child{border:none}
+.tabela-linha .label{font-weight:700;background:white;color:#475569}
+.tabela-linha .valor{justify-content:center;text-align:center;font-weight:600}
+.tabela-linha .valor.melhor{background:#f0fdf4;color:#166534;font-weight:800}
+.tabela-linha .valor.oficial{background:#eff6ff;color:#2563eb;font-weight:800}
+.loading{text-align:center;padding:60px 20px;color:#64748b}
+.spinner{border:3px solid #f1f5f9;border-top:3px solid #0f172a;border-radius:50%;width:32px;height:32px;animation:spin 0.8s linear infinite;margin:0 auto 16px}
+@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+footer{text-align:center;padding:32px 20px;color:#94a3b8;font-size:11px;border-top:1px solid #e2e8f0;margin-top:40px;background:white;line-height:1.6}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <span>⚖️ Comparativo: Mesmo produto lado a lado - MercadoLíder + Preço + Kit</span>
+  <span class="destaque">Foto real que funciona</span>
+</div>
+
+<header>
+<div class="header-inner">
+<div class="logo">Compara<span>Oferta</span></div>
+<div class="header-right">
+<span>Mesmo produto, 3 lojas, veja vantagem</span>
+<div class="badge-header">✓ Check azul + MercadoLíder + Kit</div>
+</div>
+</div>
+</header>
+
+<div class="container">
+<div class="hero">
+<h1>Mesmo produto <span>lado a lado</span> com vantagens de cada loja</h1>
+<p>Você procura <b>mouse gamer</b> → eu mostro o mesmo mouse de 3 lojistas diferentes lado a lado: preço, quem é MercadoLíder, check azul oficial, se tem kit, frete, garantia.</p>
+<div class="exemplo">
+<b>Exemplo:</b> Mouse Gamer RGB - Loja A R$31,90 GOLD 707 vendas vs Loja Oficial R$39,90 PLATINUM 1247 vendas + Kit Mousepad + Check Azul vs Loja B R$29,90 mais barato SILVER - você compara e escolhe vantagem!
+</div>
+<div class="search-box">
+<input id="q" placeholder="Qual produto comparar? Ex: mouse gamer, garrafa térmica, notebook..." autocomplete="off">
+<button onclick="buscar()">Comparar lado a lado</button>
+</div>
+<div class="quick-tags">
+<div class="tag" onclick="quick('mouse gamer')">mouse gamer - 3 lojas mesmo produto</div>
+<div class="tag" onclick="quick('garrafa térmica')">garrafa térmica - compara oficial vs barato</div>
+<div class="tag" onclick="quick('notebook')">notebook - compara kit vs individual</div>
+</div>
+</div>
+
+<div id="result" class="result"></div>
+</div>
+
+<footer>
+<p><b>ComparaOferta</b> - Mesmo produto lado a lado: MercadoLíder, preço, check azul oficial, kit se tiver • Afiliado gosteicomprei • Foto real</p>
+<p style="margin-top:8px">Vantagens: ✓ Preço • ✓ MercadoLíder Gold/Platinum • ✓ Loja Oficial Check Azul • ✓ Kit (se tiver) • ✓ Frete Grátis • ✓ Garantia</p>
+</footer>
+
+<script>
+let session = Math.random().toString(36).slice(2,10);
+let offerIdAtual = null;
+
+function quick(t){ document.getElementById('q').value=t; buscar(); }
+
+function getSafeImage(url){
+  if(!url || url.includes('/static/') || url.length < 15){
+    return 'https://http2.mlstatic.com/D_NQ_NP_807736-MLA100849271566_122025-O.jpg';
+  }
+  return url;
+}
+
+function imgOnError(img){
+  img.onerror = null;
+  img.src = 'https://http2.mlstatic.com/D_NQ_NP_807736-MLA100849271566_122025-O.jpg';
+}
+
+async function buscar(){
+  const q = document.getElementById('q').value.trim();
+  if(!q) return;
+  const resDiv = document.getElementById('result');
+  resDiv.innerHTML = `<div class="loading"><div class="spinner"></div><b>Buscando mesmo produto "${q}" de 3 lojas diferentes lado a lado...</b><br><small style="color:#94a3b8">Comparando MercadoLíder, preço, check azul, kit, frete</small></div>`;
+  try{
+    const r = await fetch('/api/offer', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({q, session})});
+    const data = await r.json();
+    if(data.ofertas && data.ofertas.length){
+      offerIdAtual = data.id;
+      render(data);
+    } else {
+      resDiv.innerHTML = `<div class="card" style="text-align:center;padding:40px"><b>Nenhum comparativo para "${q}"</b><br><span style="font-size:13px;color:#94a3b8">Tente "mouse gamer", "garrafa térmica", "notebook"</span></div>`;
+    }
+  }catch(e){
+    resDiv.innerHTML = `<div class="card" style="text-align:center;padding:40px">Erro temporário. Tente novamente.</div>`;
+  }
+}
+
+function render(data){
+  const div = document.getElementById('result');
+  div.innerHTML = `<h3 style="margin-bottom:20px;font-size:16px;font-weight:800">⚖️ Comparativo lado a lado para "${data.termo}" - Mesmo produto, 3 lojas, veja vantagens</h3>` + data.ofertas.map(o=>{
+    return `
+    <div class="card">
+      <div class="badge">${o.label}</div>
+      <div class="title">${o.sub}</div>
+      <div class="subtitle">${o.descricao}</div>
+      
+      <div class="comparativo-grid">
+        ${o.items.map((it, idx)=>{
+          const isMaisBarato = it.id === o.mais_barato_id;
+          const isOficial = it.id === o.oficial_id;
+          const isKit = it.id === o.kit_id;
+          const isMelhor = it.id === o.melhor_avaliado_id && !isMaisBarato && !isOficial && !isKit;
+          const safeImg = getSafeImage(it.imagem);
+          let cardClass = 'padrao';
+          let badgeText = '';
+          let badgeClass = '';
+          let btnClass = 'padrao';
+          
+          if(isMaisBarato){
+            cardClass = 'mais-barato';
+            badgeText = '💰 MAIS BARATO';
+            badgeClass = 'barato';
+            btnClass = 'barato';
+          } else if(isOficial){
+            cardClass = 'oficial';
+            badgeText = '✓ LOJA OFICIAL CHECK AZUL';
+            badgeClass = 'oficial';
+            btnClass = 'oficial';
+          } else if(isKit){
+            cardClass = 'kit';
+            badgeText = '🎁 KIT COM VANTAGEM';
+            badgeClass = 'kit';
+            btnClass = 'kit';
+          } else if(isMelhor){
+            cardClass = 'melhor';
+            badgeText = '⭐ MELHOR AVALIADO';
+            badgeClass = 'melhor';
+          }
+          
+          return `
+          <div class="produto-card ${cardClass}" onclick="ir('${it.id}')">
+            ${badgeText ? `<div class="vencedor-badge ${badgeClass}">${badgeText}</div>` : ''}
+            <div class="img-wrap">
+              <img src="${safeImg}" alt="${it.nome}" loading="lazy" onerror="imgOnError(this)" />
+            </div>
+            <div class="nome">${it.nome}</div>
+            <div class="loja">
+              <span class="nivel ${it.seller_level}">${it.seller_level}</span>
+              <span>${it.seller_nome}</span>
+              ${it.oficial ? `<span class="oficial">✓ ${it.oficial_nome} Check Azul</span>` : ''}
+            </div>
+            <div class="preco-area">
+              <div class="de">De R$ ${it.preco_original.toFixed(2)}</div>
+              <div class="por">R$ ${it.preco.toFixed(2)} <span class="off">-${it.desconto}%</span></div>
+            </div>
+            
+            <ul class="vantagens-list">
+              <li class="${it.preco === Math.min(...o.items.map(i=>i.preco)) ? 'positivo destaque' : 'neutro'}">
+                <span class="icon">${it.preco === Math.min(...o.items.map(i=>i.preco)) ? '✓' : '•'}</span>
+                <span><b>Preço:</b> R$ ${it.preco.toFixed(2)} ${it.preco === Math.min(...o.items.map(i=>i.preco)) ? '(mais barato)' : ''}</span>
+              </li>
+              <li class="${it.seller_level === 'PLATINUM' ? 'positivo destaque' : it.seller_level === 'GOLD' ? 'positivo' : 'neutro'}">
+                <span class="icon">${it.seller_level === 'PLATINUM' ? '★' : '•'}</span>
+                <span><b>MercadoLíder:</b> ${it.seller_level} ${it.seller_level === 'PLATINUM' ? '(top)' : ''} - ${it.vendidos}+ vendas</span>
+              </li>
+              <li class="${it.oficial ? 'positivo destaque' : 'negativo'}">
+                <span class="icon">${it.oficial ? '✓' : '✗'}</span>
+                <span><b>Check Azul:</b> ${it.oficial ? `${it.oficial_nome} Oficial ✓` : 'Não é oficial'}</span>
+              </li>
+              <li class="${it.kit ? 'positivo destaque' : 'neutro'}">
+                <span class="icon">${it.kit ? '🎁' : '•'}</span>
+                <span><b>Kit:</b> ${it.kit ? it.kit + ' (vantagem)' : 'Só produto individual'}</span>
+              </li>
+              <li class="${it.frete_gratis ? 'positivo' : 'negativo'}">
+                <span class="icon">${it.frete_gratis ? '✓' : '✗'}</span>
+                <span><b>Frete:</b> ${it.frete_gratis ? 'Frete grátis ✓' : 'Frete pago'}</span>
+              </li>
+              <li class="neutro">
+                <span class="icon">•</span>
+                <span><b>Garantia:</b> ${it.garantia}</span>
+              </li>
+              <li class="neutro">
+                <span class="icon">•</span>
+                <span><b>Parcelas:</b> ${it.parcelas}</span>
+              </li>
+            </ul>
+            
+            <button class="btn-comprar ${btnClass}" onclick="event.stopPropagation(); ir('${it.id}')">
+              Comprar ${isMaisBarato ? 'mais barato' : isOficial ? 'oficial' : isKit ? 'kit' : ''} - R$ ${it.preco.toFixed(2)}
+            </button>
+          </div>
+        `}).join('')}
+      </div>
+      
+      <div class="tabela-comparativa">
+        <div class="header-tabela">
+          <span>⚖️ Tabela comparativa lado a lado - Mesmo produto</span>
+          <span>Escolha pela vantagem que importa pra você</span>
+        </div>
+        <div class="tabela-linha">
+          <div class="cel label">Preço</div>
+          ${o.items.map(it=>`<div class="cel valor ${it.id===o.mais_barato_id?'melhor':''}">R$ ${it.preco.toFixed(2)} ${it.id===o.mais_barato_id?'💰':''}</div>`).join('')}
+        </div>
+        <div class="tabela-linha">
+          <div class="cel label">MercadoLíder</div>
+          ${o.items.map(it=>`<div class="cel valor ${it.seller_level==='PLATINUM'?'melhor':''}">${it.seller_level} ${it.seller_level==='PLATINUM'?'★':''}</div>`).join('')}
+        </div>
+        <div class="tabela-linha">
+          <div class="cel label">Check Azul</div>
+          ${o.items.map(it=>`<div class="cel valor ${it.oficial?'oficial':''}">${it.oficial?'✓ Oficial':'—'}</div>`).join('')}
+        </div>
+        <div class="tabela-linha">
+          <div class="cel label">Kit</div>
+          ${o.items.map(it=>`<div class="cel valor ${it.kit?'melhor':''}">${it.kit ? '🎁 '+it.kit : '—'}</div>`).join('')}
+        </div>
+        <div class="tabela-linha">
+          <div class="cel label">Vendas</div>
+          ${o.items.map(it=>`<div class="cel valor">${it.vendidos}+</div>`).join('')}
+        </div>
+        <div class="tabela-linha">
+          <div class="cel label">Frete</div>
+          ${o.items.map(it=>`<div class="cel valor ${it.frete_gratis?'melhor':''}">${it.frete_gratis?'Grátis ✓':'Pago'}</div>`).join('')}
+        </div>
+        <div class="tabela-linha">
+          <div class="cel label">Garantia</div>
+          ${o.items.map(it=>`<div class="cel valor">${it.garantia}</div>`).join('')}
+        </div>
+      </div>
+      
+      <div style="text-align:center;margin-top:16px;font-size:11px;color:#94a3b8">
+        Mesmo produto lado a lado • Compare MercadoLíder, preço, check azul oficial, kit se tiver • Foto real que funciona • 1 clique → checkout real ML
+      </div>
+    </div>
+  `}).join('');
+  window.ofertasCache = data.ofertas;
+}
+
+function ir(id){
+  window.open(`/go/${id}?o=${offerIdAtual}&s=${session}`, '_blank');
+}
+
+document.getElementById('q').addEventListener('keydown', e=>{ if(e.key==='Enter') buscar(); });
+</script>
+</body>
+</html>
