@@ -1,0 +1,47 @@
+{
+  "name": "ComparaOferta - Compare o mesmo produto em 3 lojas",
+  "short_name": "ComparaOferta",
+  "description": "Compare o mesmo produto em 3 lojas no Mercado Livre e pague o preço justo. Preço real da API, abre no app do ML.",
+  "start_url": "/?utm_source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "lang": "pt-BR",
+  "categories": ["shopping", "utilities"],
+  "icons": [
+    {
+      "src": "/static/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/static/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/static/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Buscar projetor",
+      "short_name": "Projetor",
+      "url": "/?q=projetor",
+      "icons": [{ "src": "/static/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Buscar mouse gamer",
+      "short_name": "Mouse Gamer",
+      "url": "/?q=mouse%20gamer",
+      "icons": [{ "src": "/static/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ]
+}
